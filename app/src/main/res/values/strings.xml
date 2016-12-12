@@ -3,6 +3,7 @@
 
     <string name="rating_title">Рейтинг</string>
     <string name="download">Скачать</string>
+    <string name="search">Поиск...</string>
     <string name="blocked">Раздача заблокирована Роскомнадзором</string>
     <string name="found_same_films"> подобных раздач в других форматах:</string>
     <string name="title_activity_description">DescriptionActivity</string>
