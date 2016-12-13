@@ -1,7 +1,10 @@
 package ru.ratanov.kinomanmvp.ui.activity.base;
 
+import android.content.Intent;
+import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +17,7 @@ import com.lapism.searchview.SearchItem;
 import com.lapism.searchview.SearchView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.ratanov.kinomanmvp.R;
 
@@ -35,6 +39,23 @@ public class BaseActivity extends MvpAppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SearchView.SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (results != null && results.size() > 0) {
+                String query = results.get(0);
+                if (!TextUtils.isEmpty(query)) {
+                    if (mSearchView != null) {
+                        mSearchView.setQuery(query, true);
+                    }
+                }
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     protected void setupToolBar() {
@@ -61,6 +82,8 @@ public class BaseActivity extends MvpAppCompatActivity {
         mSearchView.setAdapter(searchAdapter);
 
         mSearchView.setHint(R.string.search);
+        mSearchView.setVoiceText(getString(R.string.please_talk));
+
         mSearchView.setVersion(SearchView.VERSION_MENU_ITEM);
         mSearchView.setVersionMargins(SearchView.VERSION_MARGINS_MENU_ITEM);
         mSearchView.setTheme(SearchView.THEME_LIGHT);

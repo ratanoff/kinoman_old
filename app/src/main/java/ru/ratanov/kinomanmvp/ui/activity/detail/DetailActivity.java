@@ -77,13 +77,11 @@ public class DetailActivity extends BaseActivity implements DetailView {
         setupToolBar();
         setupSearchView();
 
-        //
-        mainLayout.setVisibility(View.VISIBLE);
 
         mUrl = getIntent().getStringExtra(EXTRA_URL);
         initProgressDialog();
 
-//        mDetailPresenter.loadFilm(mUrl);
+        mDetailPresenter.loadFilm(mUrl);
     }
 
 
