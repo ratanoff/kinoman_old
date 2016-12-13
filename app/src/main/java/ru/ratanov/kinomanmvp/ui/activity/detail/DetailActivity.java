@@ -3,9 +3,9 @@ package ru.ratanov.kinomanmvp.ui.activity.detail;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -22,14 +22,16 @@ import ru.ratanov.kinomanmvp.R;
 import ru.ratanov.kinomanmvp.model.content.Film;
 import ru.ratanov.kinomanmvp.presentation.view.detail.DetailView;
 import ru.ratanov.kinomanmvp.presentation.presenter.detail.DetailPresenter;
+import ru.ratanov.kinomanmvp.ui.activity.base.BaseActivity;
 import ru.ratanov.kinomanmvp.ui.fragment.detail.SameFragment;
 
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.squareup.picasso.Picasso;
 
-public class DetailActivity extends MvpAppCompatActivity implements DetailView {
+public class DetailActivity extends BaseActivity implements DetailView {
 
     @InjectPresenter
     DetailPresenter mDetailPresenter;
@@ -72,10 +74,18 @@ public class DetailActivity extends MvpAppCompatActivity implements DetailView {
         setContentView(R.layout.detail_activity);
         ButterKnife.bind(this);
 
+        setupToolBar();
+        setupSearchView();
+
+        //
+        mainLayout.setVisibility(View.VISIBLE);
+
         mUrl = getIntent().getStringExtra(EXTRA_URL);
         initProgressDialog();
-        mDetailPresenter.loadFilm(mUrl);
+
+//        mDetailPresenter.loadFilm(mUrl);
     }
+
 
     void initProgressDialog() {
         mProgressDialog = new ProgressDialog(this);

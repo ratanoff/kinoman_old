@@ -17,7 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.detail.DetailActivity">
+        <activity android:name=".ui.activity.detail.DetailActivity"
+            android:label="@string/detail_activity"
+            android:exported="true">
         </activity>
         <activity
             android:name=".ui.activity.detail.DescriptionActivity"

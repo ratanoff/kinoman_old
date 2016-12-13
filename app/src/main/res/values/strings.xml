@@ -7,5 +7,6 @@
     <string name="blocked">Раздача заблокирована Роскомнадзором</string>
     <string name="found_same_films"> подобных раздач в других форматах:</string>
     <string name="title_activity_description">DescriptionActivity</string>
+    <string name="detail_activity">Detail</string>
 
 </resources>

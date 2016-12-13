@@ -13,8 +13,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.ratanov.kinomanmvp.R;
+import ru.ratanov.kinomanmvp.ui.activity.base.BaseActivity;
 
-public class DescriptionActivity extends AppCompatActivity {
+public class DescriptionActivity extends BaseActivity {
 
     public static final String EXTRA_DESCRIPTION = "extra_description";
 
@@ -34,6 +35,9 @@ public class DescriptionActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mTextView.setText(getIntent().getStringExtra(EXTRA_DESCRIPTION));
+
+        setupToolBar();
+        setupSearchView();
     }
 
 }
