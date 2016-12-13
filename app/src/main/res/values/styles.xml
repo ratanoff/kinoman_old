@@ -34,6 +34,9 @@
         <item name="android:textColor">@color/gray</item>
     </style>
 
+    <style name="MySearchView">
+        <item name="search_elevation">5dp</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
