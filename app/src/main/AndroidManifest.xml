@@ -17,11 +17,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.detail.DetailActivity"
+        <activity
+            android:name=".ui.activity.detail.DetailActivity"
             android:exported="true">
         </activity>
-        <activity
-            android:name=".ui.activity.detail.DescriptionActivity">
+        <activity android:name=".ui.activity.detail.DescriptionActivity">
+        </activity>
+        <activity android:name=".ui.activity.search.SearchActivity"
+            android:launchMode="singleTop">
         </activity>
     </application>
 

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.ratanov.kinomanmvp.R;
+import ru.ratanov.kinomanmvp.ui.activity.search.SearchActivity;
 
 public class BaseActivity extends MvpAppCompatActivity {
 
@@ -69,7 +70,7 @@ public class BaseActivity extends MvpAppCompatActivity {
         mHistoryTable = new SearchHistoryTable(this);
         mHistoryTable.setHistorySize(5);
 
-        SearchAdapter searchAdapter = new SearchAdapter(this, new ArrayList<SearchItem>(5));
+        SearchAdapter searchAdapter = new SearchAdapter(this);
         searchAdapter.addOnItemClickListener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -105,7 +106,9 @@ public class BaseActivity extends MvpAppCompatActivity {
     void doSearch(String query) {
         mHistoryTable.addItem(new SearchItem(query));
         mSearchView.close(true);
-        Snackbar.make(mSearchView, query, Snackbar.LENGTH_SHORT).show();
+
+        Intent intent = SearchActivity.newIntent(this, query);
+        startActivity(intent);
     }
 
 

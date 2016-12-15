@@ -10,6 +10,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -79,6 +80,7 @@ public class DetailActivity extends BaseActivity implements DetailView {
 
 
         mUrl = getIntent().getStringExtra(EXTRA_URL);
+        Log.d(TAG, "onCreate: " + mUrl);
         initProgressDialog();
 
         mDetailPresenter.loadFilm(mUrl);
