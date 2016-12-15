@@ -3,6 +3,7 @@ package ru.ratanov.kinomanmvp.ui.activity.detail;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import ru.ratanov.kinomanmvp.model.content.Film;
 import ru.ratanov.kinomanmvp.presentation.view.detail.DetailView;
 import ru.ratanov.kinomanmvp.presentation.presenter.detail.DetailPresenter;
 import ru.ratanov.kinomanmvp.ui.activity.base.BaseActivity;
+import ru.ratanov.kinomanmvp.ui.activity.pref.PreferenceActivity;
 import ru.ratanov.kinomanmvp.ui.fragment.detail.SameFragment;
 
 
@@ -188,15 +190,26 @@ public class DetailActivity extends BaseActivity implements DetailView {
     }
 
     @Override
-    public void showAddingResult(String message) {
-        Snackbar.make(mainLayout, message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("ОК", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+    public void showAddingResult(String message, boolean setupServer) {
+        if (setupServer) {
+            Snackbar.make(mainLayout, message, Snackbar.LENGTH_INDEFINITE)
+                    .setActionTextColor(Color.BLUE)
+                    .setAction("Настроить", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getBaseContext(), PreferenceActivity.class);
+                            startActivity(intent);
+                        }
+                    }).show();
+        } else {
+            Snackbar.make(mainLayout, message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction("ОК", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                    }
-                })
-                .show();
+                        }
+                    }).show();
+        }
     }
 
     public String getUrl() {

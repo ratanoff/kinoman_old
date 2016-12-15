@@ -26,6 +26,8 @@
         <activity android:name=".ui.activity.search.SearchActivity"
             android:launchMode="singleTop">
         </activity>
+        <activity android:name=".ui.activity.pref.PreferenceActivity"
+                  android:label="@string/settings"/>
     </application>
 
 </manifest>

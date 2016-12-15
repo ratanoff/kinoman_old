@@ -1,6 +1,10 @@
 package ru.ratanov.kinomanmvp.model.utils;
+
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -32,6 +36,12 @@ public class MagnetLinkFetchr {
 
     public static final String TAG = "MagnetLinkFetchr";
 
+    private static String SERVER;
+    private static String PORT;
+    private static String LOGIN;
+    private static String PASSWORD;
+
+
     private Activity mActivity;
     private MvpPresenter mMvpPresenter;
     private WebView mWebView;
@@ -58,15 +68,21 @@ public class MagnetLinkFetchr {
                 } else {
                     Log.i(TAG, "processHtml: not found");
 
-                    showResultMessage("Ссылка не найдена");
+                    showResultMessage("Ссылка не найдена", false);
                 }
             }
         }
     }
 
     public void getHashLink(Activity activity, MvpPresenter mvpPresenter, final String linkId) {
+
         mActivity = activity;
         mMvpPresenter = mvpPresenter;
+
+        if (!isServerSettedUp()) {
+            showResultMessage("Заполните данные сервера в настройках", true);
+            return;
+        }
 
         mWebView = new WebView(mActivity);
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -129,12 +145,24 @@ public class MagnetLinkFetchr {
         Log.i(TAG, "onPageFinished: Parse");
     }
 
-    private void showResultMessage(String message) {
+    private void showResultMessage(String message, boolean setupServer) {
         if (mMvpPresenter instanceof DetailPresenter) {
-            ((DetailPresenter) mMvpPresenter).showResult(message);
+            ((DetailPresenter) mMvpPresenter).showResult(message, setupServer);
         } else if (mMvpPresenter instanceof SamePresenter) {
-            ((SamePresenter) mMvpPresenter).showResult(message);
+            ((SamePresenter) mMvpPresenter).showResult(message, setupServer);
         }
+    }
+
+    private boolean isServerSettedUp() {
+        SERVER = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_SERVER);
+        PORT = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_PORT);
+        LOGIN = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_LOGIN);
+        PASSWORD = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_PASSWORD);
+
+        return !(TextUtils.isEmpty(SERVER) ||
+                TextUtils.isEmpty(PORT) ||
+                TextUtils.isEmpty(LOGIN) ||
+                TextUtils.isEmpty(PASSWORD));
     }
 }
 

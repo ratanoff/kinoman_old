@@ -13,5 +13,5 @@ public interface SameView extends MvpView {
     void setupAdapter(List<SameItem> items);
 
     void showAddingProgress();
-    void showAddingResult(String message);
+    void showAddingResult(String message, boolean setupServer);
 }

@@ -120,9 +120,9 @@ public class TorrentAPI {
 
     private static void showResultMessgae(String message) {
         if (sMvpPresenter instanceof DetailPresenter) {
-            ((DetailPresenter) sMvpPresenter).showResult(message);
+            ((DetailPresenter) sMvpPresenter).showResult(message, false);
         } else if (sMvpPresenter instanceof SamePresenter) {
-            ((SamePresenter) sMvpPresenter).showResult(message);
+            ((SamePresenter) sMvpPresenter).showResult(message, false);
         }
     }
 }

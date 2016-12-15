@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.ratanov.kinomanmvp.R;
+import ru.ratanov.kinomanmvp.ui.activity.pref.PreferenceActivity;
 import ru.ratanov.kinomanmvp.ui.activity.search.SearchActivity;
 
 public class BaseActivity extends MvpAppCompatActivity {
@@ -37,6 +38,10 @@ public class BaseActivity extends MvpAppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search) {
             mSearchView.open(true, item);
+        }
+        if (item.getItemId() == R.id.action_settings) {
+            Intent intent = new Intent(this, PreferenceActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

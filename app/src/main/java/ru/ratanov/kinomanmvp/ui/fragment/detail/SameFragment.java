@@ -102,7 +102,7 @@ public class SameFragment extends MvpAppCompatFragment implements SameView {
     }
 
     @Override
-    public void showAddingResult(String message) {
+    public void showAddingResult(String message, boolean setupServer) {
         Snackbar.make(mRecyclerView, message, Snackbar.LENGTH_INDEFINITE)
                 .setAction("ОК", new View.OnClickListener() {
                     @Override

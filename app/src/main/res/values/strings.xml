@@ -9,5 +9,6 @@
     <string name="title_activity_description">DescriptionActivity</string>
     <string name="detail_activity">Detail</string>
     <string name="please_talk">Говорите</string>
+    <string name="settings">Настройки</string>
 
 </resources>

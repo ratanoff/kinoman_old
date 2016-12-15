@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Настройка сервера">
+        <ru.ratanov.kinomanmvp.model.utils.EditTextPreference
+            android:key="server"
+            android:title="IP адрес"/>
+        <ru.ratanov.kinomanmvp.model.utils.EditTextPreference
+            android:key="port"
+            android:title="Порт"/>
+        <ru.ratanov.kinomanmvp.model.utils.EditTextPreference
+            android:key="login"
+            android:title="Логин"/>
+        <EditTextPreference
+            android:key="password"
+            android:title="Пароль"
+            android:inputType="textPassword"/>
+    </PreferenceCategory>
+</PreferenceScreen>

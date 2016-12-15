@@ -17,5 +17,5 @@ public interface DetailView extends MvpView {
 
     void showAddingProgress();
 
-    void showAddingResult(String message);
+    void showAddingResult(String message, boolean setupServer);
 }
