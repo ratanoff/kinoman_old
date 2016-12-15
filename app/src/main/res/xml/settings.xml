@@ -14,5 +14,6 @@
             android:key="password"
             android:title="Пароль"
             android:inputType="textPassword"/>
+        <Preference/>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -10,5 +10,6 @@
     <string name="detail_activity">Detail</string>
     <string name="please_talk">Говорите</string>
     <string name="settings">Настройки</string>
+    <string name="connection_test">Проверка связи</string>
 
 </resources>

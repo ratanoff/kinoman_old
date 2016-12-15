@@ -9,16 +9,9 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new PreferenceFragment())
-                .commit();
+        addPreferencesFromResource(R.xml.settings);
+        setContentView(R.layout.pref_button_test);
+
     }
 
-    public static class PreferenceFragment extends android.preference.PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.settings);
-        }
-    }
 }
