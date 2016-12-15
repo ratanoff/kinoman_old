@@ -2,11 +2,8 @@ package ru.ratanov.kinomanmvp.model.net;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.arellomobile.mvp.MvpDelegate;
 import com.arellomobile.mvp.MvpPresenter;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -18,70 +15,78 @@ import ru.ratanov.kinomanmvp.presentation.presenter.detail.DetailPresenter;
 import ru.ratanov.kinomanmvp.presentation.presenter.detail.SamePresenter;
 
 public class TorrentAPI {
-    static Activity sActivity;
-    static MvpPresenter sMvpPresenter;
+
+    private Activity mActivity;
+    private MvpPresenter mMvpPresenter;
+
+    private OnTestConnectionListener mListener;
 
     public static final String TAG = "TorrentAPI";
 
     private static String token = null;
     private static String SERVER_URL = null;
-    private static String sSERVER = "192.168.1.106";
-    private static String sPORT = "8888";
-    private static String sLOGIN = "admin";
-    private static String sPASSWORD = "742882";
+    private static String SERVER = null;
+    private static String PORT = null;
+    private static String LOGIN = null;
+    private static String PASSWORD = null;
 
-    public static void setContext(Activity activity, MvpPresenter mvpPresenter) {
-        sActivity = activity;
-        sMvpPresenter = mvpPresenter;
+    public TorrentAPI(Activity mActivity) {
+        this.mActivity = mActivity;
+        mListener = (OnTestConnectionListener) mActivity;
     }
 
-    public static void getToken() {
+    public TorrentAPI(Activity mActivity, MvpPresenter mMvpPresenter) {
+        this.mActivity = mActivity;
+        this.mMvpPresenter = mMvpPresenter;
+    }
+
+    public interface OnTestConnectionListener {
+        void onTestFinish(boolean result);
+    }
+
+    public void testConnection() {
 
         getServerSettings();
 
-        if (sSERVER == null || sPORT == null || sLOGIN == null || sPASSWORD == null) {
-//            SetServerDialog dialog = new SetServerDialog();
-//            AppCompatActivity activity = (AppCompatActivity) sActivity;
-//            dialog.show(activity.getSupportFragmentManager(), "add_server");
-        } else {
+        SERVER_URL = "http://" + SERVER + ":" + PORT + "/gui/";
+        String url = SERVER_URL + "token.html";
 
-            SERVER_URL = "http://" + sSERVER + ":" + sPORT + "/gui/";
+        Log.d(TAG, "testConnection: " + url);
 
-            String url = SERVER_URL + "token.html";
+        HttpClient.setBasicAuth(LOGIN, PASSWORD);
+        HttpClient.get(url, null, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                mListener.onTestFinish(true);
+                Log.d(TAG, "onSuccess: ");
+            }
 
-            HttpClient.setBasicAuth(sLOGIN, sPASSWORD);
-            HttpClient.get(url, null, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    String doc = new String(responseBody);
-                    token = Jsoup.parse(doc).select("div#token").text();
-                    Log.i(TAG, "Got token " + token);
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                    Log.e(TAG, "Failure get token: " + statusCode);
-                }
-            });
-        }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+               mListener.onTestFinish(false);
+                Log.d(TAG, "onFailure: ");
+            }
+        });
     }
 
-    private static void getServerSettings() {
-        sSERVER = QueryPreferences.getStoredQuery(sActivity, QueryPreferences.PREF_SERVER);
-        sPORT = QueryPreferences.getStoredQuery(sActivity, QueryPreferences.PREF_PORT);
-        sLOGIN = QueryPreferences.getStoredQuery(sActivity, QueryPreferences.PREF_LOGIN);
-        sPASSWORD = QueryPreferences.getStoredQuery(sActivity, QueryPreferences.PREF_PASSWORD);
+    private void getServerSettings() {
+        SERVER = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_SERVER);
+        PORT = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_PORT);
+        LOGIN = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_LOGIN);
+        PASSWORD = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_PASSWORD);
     }
 
-    public static void addTorrent(final String magnetLink) {
+    public void addTorrent(final String magnetLink) {
 
-        SERVER_URL = "http://" + sSERVER + ":" + sPORT + "/gui/";
+        getServerSettings();
+
+        SERVER_URL = "http://" + SERVER + ":" + PORT + "/gui/";
 
         String url = SERVER_URL + "token.html";
 
         Log.d(TAG, "addTorrent: " + url);
 
-        HttpClient.setBasicAuth(sLOGIN, sPASSWORD);
+        HttpClient.setBasicAuth(LOGIN, PASSWORD);
         HttpClient.get(url, null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -100,12 +105,12 @@ public class TorrentAPI {
                 HttpClient.get(url, null, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        showResultMessgae("Торрент добавлен");
+                        showResultMessage("Торрент добавлен");
                     }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        showResultMessgae("Ошибка добавления торрента (" + statusCode + ")");
+                        showResultMessage("Ошибка добавления торрента (" + statusCode + ")");
                     }
                 });
 
@@ -113,16 +118,16 @@ public class TorrentAPI {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                showResultMessgae("Нет связи  с сервером (" + statusCode + ")");
+                showResultMessage("Нет связи  с сервером (" + statusCode + ")");
             }
         });
     }
 
-    private static void showResultMessgae(String message) {
-        if (sMvpPresenter instanceof DetailPresenter) {
-            ((DetailPresenter) sMvpPresenter).showResult(message, false);
-        } else if (sMvpPresenter instanceof SamePresenter) {
-            ((SamePresenter) sMvpPresenter).showResult(message, false);
+    private void showResultMessage(String message) {
+        if (mMvpPresenter instanceof DetailPresenter) {
+            ((DetailPresenter) mMvpPresenter).showResult(message, false);
+        } else if (mMvpPresenter instanceof SamePresenter) {
+            ((SamePresenter) mMvpPresenter).showResult(message, false);
         }
     }
 }

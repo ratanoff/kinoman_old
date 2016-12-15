@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/connection_test"
         android:theme="@style/DownloadButton"
-        android:layout_marginLeft="@dimen/md_keylines"
+        android:paddingLeft="@dimen/md_keylines"
+        android:paddingRight="@dimen/md_keylines"
         android:layout_marginRight="@dimen/md_keylines"/>
 </LinearLayout>

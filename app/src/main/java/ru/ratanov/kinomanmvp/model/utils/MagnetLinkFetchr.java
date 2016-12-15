@@ -61,9 +61,11 @@ public class MagnetLinkFetchr {
                 if (li.text().contains("Инфо хеш")) {
                     magnetLinkHash = li.text().substring(10);
                     Log.i(TAG, "processHtml: " + magnetLinkHash);
-                    TorrentAPI.setContext(mActivity, mMvpPresenter);
                     String magnetLink = "magnet:?xt=urn:btih:" + magnetLinkHash;
-                    TorrentAPI.addTorrent(magnetLink);
+
+                    TorrentAPI torrentAPI = new TorrentAPI(mActivity, mMvpPresenter);
+                    torrentAPI.addTorrent(magnetLink);
+
                     break;
                 } else {
                     Log.i(TAG, "processHtml: not found");
