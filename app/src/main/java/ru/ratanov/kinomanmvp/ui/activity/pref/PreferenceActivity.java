@@ -3,6 +3,7 @@ package ru.ratanov.kinomanmvp.ui.activity.pref;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,7 +28,14 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
         mView = view;
         TorrentAPI torrentAPI = new TorrentAPI(this);
         torrentAPI.testConnection();
+        showTestingProgress();
+    }
 
+    public void showTestingProgress() {
+        Snackbar snackbar = Snackbar.make(mView, "Проверка связи...", Snackbar.LENGTH_INDEFINITE);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.addView(new ProgressBar(this));
+        snackbar.show();
     }
 
     @Override

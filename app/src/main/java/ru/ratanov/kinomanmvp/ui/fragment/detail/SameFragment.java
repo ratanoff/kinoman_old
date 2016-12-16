@@ -1,6 +1,7 @@
 package ru.ratanov.kinomanmvp.ui.fragment.detail;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -24,6 +25,7 @@ import ru.ratanov.kinomanmvp.model.content.SameItem;
 import ru.ratanov.kinomanmvp.presentation.presenter.detail.SamePresenter;
 import ru.ratanov.kinomanmvp.presentation.view.detail.SameView;
 import ru.ratanov.kinomanmvp.ui.activity.detail.DetailActivity;
+import ru.ratanov.kinomanmvp.ui.activity.pref.PreferenceActivity;
 
 public class SameFragment extends MvpAppCompatFragment implements SameView {
 
@@ -103,13 +105,22 @@ public class SameFragment extends MvpAppCompatFragment implements SameView {
 
     @Override
     public void showAddingResult(String message, boolean setupServer) {
-        Snackbar.make(mRecyclerView, message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("ОК", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+        if (setupServer) {
+            Snackbar.make(mRecyclerView, message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Настроить", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), PreferenceActivity.class);
+                            startActivity(intent);
+                        }
+                    }).show();
+        } else {
+            Snackbar.make(mRecyclerView, message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction("ОК", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                    }
-                })
-                .show();
-    }
+                        }
+                    }).show();
+        }    }
 }

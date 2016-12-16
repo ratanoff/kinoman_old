@@ -193,7 +193,6 @@ public class DetailActivity extends BaseActivity implements DetailView {
     public void showAddingResult(String message, boolean setupServer) {
         if (setupServer) {
             Snackbar.make(mainLayout, message, Snackbar.LENGTH_INDEFINITE)
-                    .setActionTextColor(Color.BLUE)
                     .setAction("Настроить", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

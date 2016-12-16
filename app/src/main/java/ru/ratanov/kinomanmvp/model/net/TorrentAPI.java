@@ -51,8 +51,6 @@ public class TorrentAPI {
         SERVER_URL = "http://" + SERVER + ":" + PORT + "/gui/";
         String url = SERVER_URL + "token.html";
 
-        Log.d(TAG, "testConnection: " + url);
-
         HttpClient.setBasicAuth(LOGIN, PASSWORD);
         HttpClient.get(url, null, new AsyncHttpResponseHandler() {
             @Override
