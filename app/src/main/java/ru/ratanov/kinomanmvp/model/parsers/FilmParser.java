@@ -124,10 +124,6 @@ public class FilmParser {
             if (mMvpPresenter instanceof MultsPresenter) {
                 ((MultsPresenter) mMvpPresenter).onLoadComplete(topItems);
             }
-
-
-//            ((FilmsPresenter) mMvpPresenter).onLoadComplete(topItems);
-            System.out.println("Main Task complete - " + category + "(" + topItems.size() + ")");
         }
     }
 

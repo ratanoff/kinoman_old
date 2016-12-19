@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tile_picture"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
-    android:padding="@dimen/tile_padding" >
+    android:layout_margin="1dp"
+    android:scaleType="centerCrop"/>
 
-    <ImageView
-        android:id="@+id/tile_picture"
-        android:layout_width="@dimen/tile_width"
-        android:layout_height="@dimen/tile_height"
-        android:transitionName="poster"
-        android:scaleType="centerCrop"/>
 
-</RelativeLayout>

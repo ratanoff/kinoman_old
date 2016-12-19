@@ -36,17 +36,6 @@ public class BaseFragment extends MvpAppCompatFragment implements MainView {
         mRecyclerView = (RecyclerView) inflater.inflate(R.layout.base_recyclerview, container, false);
         mRecyclerView.setPadding(titlePadding, titlePadding, titlePadding, titlePadding);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
-        // Define number of columns
-        mRecyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int tileWidth = getResources().getDimensionPixelSize(R.dimen.tile_width);
-                int numColumns = mRecyclerView.getWidth() / tileWidth;
-                ((GridLayoutManager) mRecyclerView.getLayoutManager()).setSpanCount(numColumns);
-            }
-        });
-
         mRecyclerView.setHasFixedSize(true);
         return mRecyclerView;
     }

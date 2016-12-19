@@ -40,7 +40,6 @@ public class SameAdapter extends RecyclerView.Adapter<SameAdapter.SameViewHolder
     @Override
     public void onBindViewHolder(SameViewHolder holder, int position) {
         holder.bindItem(mItems.get(position));
-        holder.bindIndex(position);
     }
 
     @Override
@@ -55,7 +54,6 @@ public class SameAdapter extends RecyclerView.Adapter<SameAdapter.SameViewHolder
         private TextView seeds;
         private TextView series;
         private TextView date;
-        private TextView index;
         private Button downloadButton;
 
         SameViewHolder(View view) {
@@ -65,7 +63,6 @@ public class SameAdapter extends RecyclerView.Adapter<SameAdapter.SameViewHolder
             seeds = (TextView) view.findViewById(R.id.same_seeds);
             series = (TextView) view.findViewById(R.id.same_series);
             date = (TextView) view.findViewById(R.id.same_date);
-            index = (TextView) view.findViewById(R.id.same_index);
             downloadButton = (Button) view.findViewById(R.id.same_download_button);
         }
 
@@ -92,8 +89,5 @@ public class SameAdapter extends RecyclerView.Adapter<SameAdapter.SameViewHolder
             });
         }
 
-        void bindIndex(int position) {
-            index.setText(String.valueOf(position));
-        }
     }
 }

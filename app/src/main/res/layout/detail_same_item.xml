@@ -132,15 +132,5 @@
         tools:ignore="SmallSp"
         tools:text="1 сезон: 1-17 серии из 20"/>
 
-    <TextView
-        android:id="@+id/same_index"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/include"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:ignore="SmallSp"
-        tools:text="1"/>
-
 </android.support.constraint.ConstraintLayout>
 

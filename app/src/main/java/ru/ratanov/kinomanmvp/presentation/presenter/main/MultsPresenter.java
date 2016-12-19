@@ -27,12 +27,9 @@ public class MultsPresenter extends MvpPresenter<MainView> {
     public void loadData() {
         FilmParser filmParser = new FilmParser(this);
         filmParser.getTopFilms(mCategory);
-
-        Log.d(TAG, "loadData: " + mCategory);
     }
 
     public void onLoadComplete(List<TopItem> topItems) {
         getViewState().setupAdapter(topItems);
-        Log.d(TAG, "onLoadComplete: " + mCategory);
     }
 }

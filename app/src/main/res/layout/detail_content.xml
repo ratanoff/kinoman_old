@@ -45,10 +45,10 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/img_border"
+                android:scaleType="centerCrop"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_title"
-                tools:ignore="ContentDescription"
-                android:scaleType="centerCrop"/>
+                tools:ignore="ContentDescription"/>
 
             <TextView
                 android:id="@+id/detail_quality"
@@ -152,6 +152,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/detail_year"
                 tools:text="Жанр: Мультфильм, комедия, семейный, полнометражный"/>
 
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <include
                 android:id="@+id/include2"
                 layout="@layout/base_divider_horizontal"
@@ -159,18 +165,18 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_poster"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/detail_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/rating_green"
                 android:textSize="20sp"
                 android:textStyle="normal|bold"
-                app:layout_constraintLeft_toLeftOf="@+id/detail_poster"
-                app:layout_constraintRight_toRightOf="@+id/detail_poster"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/include2"
                 tools:text="7.5"/>
 
@@ -178,10 +184,10 @@
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
                 android:text="@string/rating_title"
                 android:textSize="10sp"
-                app:layout_constraintLeft_toLeftOf="@+id/detail_poster"
-                app:layout_constraintRight_toRightOf="@+id/detail_poster"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_rating"/>
 
             <TextView
@@ -210,10 +216,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:layout_marginRight="4dp"
+                android:src="@drawable/ic_date_range_black_24dp"
                 android:tint="@color/tint_gray"
                 app:layout_constraintBottom_toBottomOf="@+id/detail_date_title"
-                app:layout_constraintRight_toLeftOf="@+id/detail_date_title"
-                android:src="@drawable/ic_date_range_black_24dp"/>
+                app:layout_constraintRight_toLeftOf="@+id/detail_date_title"/>
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline4"
@@ -300,8 +306,7 @@
                 app:layout_constraintHorizontal_bias="0.43"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/imageView4"
-                app:layout_constraintTop_toBottomOf="@+id/include4"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/include4"/>
 
             <include
                 android:id="@+id/include5"
@@ -318,11 +323,11 @@
                 android:layout_height="0dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
+                android:src="@drawable/ic_arrow_right_black_24dp"
+                android:tint="@color/tint_gray"
                 app:layout_constraintBottom_toTopOf="@+id/include5"
                 app:layout_constraintRight_toRightOf="@+id/include3"
-                app:layout_constraintTop_toBottomOf="@+id/include4"
-                android:src="@drawable/ic_arrow_right_black_24dp"
-                android:tint="@color/tint_gray"/>
+                app:layout_constraintTop_toBottomOf="@+id/include4"/>
 
         </android.support.constraint.ConstraintLayout>
 
