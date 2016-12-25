@@ -17,4 +17,14 @@
 Ставим галочку на \"Использовать веб-интерфейс\", придумываем свой логин, пароль и альтернативный порт.
     Заполняем этими данными настройки приложения (включая IP-адрес сервера)</string>
 
+    <string-array name="client_type_titles">
+        <item>uTorrent</item>
+        <item>Transmission</item>
+    </string-array>
+
+    <string-array name="client_type_values">
+        <item>uTorrent</item>
+        <item>Transmission</item>
+    </string-array>
+
 </resources>

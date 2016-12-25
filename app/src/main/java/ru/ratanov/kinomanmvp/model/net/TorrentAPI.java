@@ -30,13 +30,13 @@ public class TorrentAPI {
     private static String LOGIN = null;
     private static String PASSWORD = null;
 
-    public TorrentAPI(Activity mActivity) {
-        this.mActivity = mActivity;
-        mListener = (OnTestConnectionListener) mActivity;
+    public TorrentAPI(Activity activity) {
+        this.mActivity = activity;
+        mListener = (OnTestConnectionListener) activity;
     }
 
-    public TorrentAPI(Activity mActivity, MvpPresenter mMvpPresenter) {
-        this.mActivity = mActivity;
+    public TorrentAPI(Activity activity, MvpPresenter mMvpPresenter) {
+        this.mActivity = activity;
         this.mMvpPresenter = mMvpPresenter;
     }
 

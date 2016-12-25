@@ -22,8 +22,9 @@
         android:layout_marginRight="@dimen/md_keylines"/>
 
     <TextView
+        android:id="@+id/version_label"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/md_keylines"
-        android:text="@string/instructions"/>
+        android:gravity="right|bottom"/>
 </LinearLayout>

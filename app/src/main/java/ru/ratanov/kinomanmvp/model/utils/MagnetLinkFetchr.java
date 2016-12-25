@@ -18,6 +18,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import ru.ratanov.kinomanmvp.model.net.TorrentAPI;
+import ru.ratanov.kinomanmvp.model.net.TransmissionAPI;
 import ru.ratanov.kinomanmvp.presentation.presenter.detail.DetailPresenter;
 import ru.ratanov.kinomanmvp.presentation.presenter.detail.SamePresenter;
 
@@ -36,6 +37,7 @@ public class MagnetLinkFetchr {
 
     public static final String TAG = "MagnetLinkFetchr";
 
+    private static String SERVER_TYPE;
     private static String SERVER;
     private static String PORT;
     private static String LOGIN;
@@ -63,8 +65,17 @@ public class MagnetLinkFetchr {
                     Log.i(TAG, "processHtml: " + magnetLinkHash);
                     String magnetLink = "magnet:?xt=urn:btih:" + magnetLinkHash;
 
-                    TorrentAPI torrentAPI = new TorrentAPI(mActivity, mMvpPresenter);
-                    torrentAPI.addTorrent(magnetLink);
+                    switch (SERVER_TYPE) {
+                        case "uTorrent":
+                            TorrentAPI torrentAPI = new TorrentAPI(mActivity, mMvpPresenter);
+                            torrentAPI.addTorrent(magnetLink);
+                            break;
+                        case "Transmission":
+                            TransmissionAPI transmissionAPI = new TransmissionAPI(mActivity, mMvpPresenter);
+                            transmissionAPI.addTorrent(magnetLink);
+                            break;
+                    }
+
 
                     break;
                 } else {
@@ -156,6 +167,7 @@ public class MagnetLinkFetchr {
     }
 
     private boolean isServerSettedUp() {
+        SERVER_TYPE = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.SERVER_TYPE);
         SERVER = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_SERVER);
         PORT = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_PORT);
         LOGIN = QueryPreferences.getStoredQuery(mActivity, QueryPreferences.PREF_LOGIN);

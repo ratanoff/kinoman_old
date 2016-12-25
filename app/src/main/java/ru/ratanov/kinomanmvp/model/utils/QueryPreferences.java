@@ -4,6 +4,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 
 public class QueryPreferences {
+    public static final String SERVER_TYPE = "torrent_client_type";
     public static final String PREF_SERVER = "server";
     public static final String PREF_PORT = "port";
     public static final String PREF_LOGIN = "login";

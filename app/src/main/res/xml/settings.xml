@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Настройка сервера">
+        <ListPreference
+            android:defaultValue="uTorrent"
+            android:entries="@array/client_type_titles"
+            android:entryValues="@array/client_type_values"
+            android:key="torrent_client_type"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:summary="%s"
+            android:title="Торрент клиент"/>
         <ru.ratanov.kinomanmvp.model.utils.EditTextPreference
             android:key="server"
             android:title="IP адрес"/>
@@ -11,9 +20,9 @@
             android:key="login"
             android:title="Логин"/>
         <EditTextPreference
+            android:inputType="textPassword"
             android:key="password"
-            android:title="Пароль"
-            android:inputType="textPassword"/>
+            android:title="Пароль"/>
         <Preference/>
     </PreferenceCategory>
 </PreferenceScreen>
