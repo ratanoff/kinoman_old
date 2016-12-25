@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
 <application>
-    <activity android:name="ru.ratanov.kinomanmvp.main.MainActivity"/>
+    <activity android:name="ru.ratanov.kinoman.main.MainActivity"/>
 </application>
 </manifest>
 
@@ -10,7 +10,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
 <application>
-    <activity android:name="ru.ratanov.kinomanmvp.detail.DetailActivity"/>
+    <activity android:name="ru.ratanov.kinoman.detail.DetailActivity"/>
 </application>
 </manifest>
     >>>>>>> Added

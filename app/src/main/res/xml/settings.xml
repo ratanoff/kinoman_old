@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:title="Способ загрузки"
+        android:defaultValue="ask"
+        android:entries="@array/download_behavior_titles"
+        android:entryValues="@array/download_behavior_values"
+        android:key="download_behavior"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:summary="%s"/>
+
     <PreferenceCategory android:title="Настройка сервера">
         <ListPreference
             android:defaultValue="uTorrent"
@@ -10,13 +20,13 @@
             android:positiveButtonText="@null"
             android:summary="%s"
             android:title="Торрент клиент"/>
-        <ru.ratanov.kinomanmvp.model.utils.EditTextPreference
+        <ru.ratanov.kinoman.model.utils.EditTextPreference
             android:key="server"
             android:title="IP адрес"/>
-        <ru.ratanov.kinomanmvp.model.utils.EditTextPreference
+        <ru.ratanov.kinoman.model.utils.EditTextPreference
             android:key="port"
             android:title="Порт"/>
-        <ru.ratanov.kinomanmvp.model.utils.EditTextPreference
+        <ru.ratanov.kinoman.model.utils.EditTextPreference
             android:key="login"
             android:title="Логин"/>
         <EditTextPreference

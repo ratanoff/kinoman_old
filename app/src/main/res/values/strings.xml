@@ -27,4 +27,16 @@
         <item>Transmission</item>
     </string-array>
 
+    <string-array name="download_behavior_titles">
+        <item>Отправить на сервер</item>
+        <item>Скачать на устройство</item>
+        <item>Спрашивать всегда</item>
+    </string-array>
+
+    <string-array name="download_behavior_values">
+        <item>send_to_server</item>
+        <item>send_intent</item>
+        <item>ask</item>
+    </string-array>
+
 </resources>
