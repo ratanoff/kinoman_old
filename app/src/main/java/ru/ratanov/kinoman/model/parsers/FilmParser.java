@@ -26,6 +26,10 @@ import ru.ratanov.kinoman.presentation.presenter.main.FilmsPresenter;
 import ru.ratanov.kinoman.presentation.presenter.main.MultsPresenter;
 import ru.ratanov.kinoman.presentation.presenter.main.SerialsPresenter;
 
+import static ru.ratanov.kinoman.model.base.Constants.BASE_URL;
+import static ru.ratanov.kinoman.model.base.Constants.BASE_URL_TOP;
+import static ru.ratanov.kinoman.model.base.Constants.KINOPOISK_URL;
+
 /**
  * Created by ACER on 27.11.2016.
  */
@@ -82,7 +86,7 @@ public class FilmParser {
             category = params[0];
 
             List<TopItem> items = new ArrayList<>();
-            String url = Uri.parse("http://kinozal.me/top.php")
+            String url = Uri.parse(BASE_URL_TOP)
                     .buildUpon()
                     .appendQueryParameter("t", params[0])
                     .build()
@@ -94,7 +98,7 @@ public class FilmParser {
                     Elements elements = doc.select("div.bx1").select("a");
 //                    Log.i(TAG, String.valueOf(elements.size()) + "\n" + "-----");
                     for (Element entry : elements) {
-                        String link = "http://kinozal.me" + entry.select("a").attr("href");
+                        String link = BASE_URL + entry.select("a").attr("href");
                         String title = entry.select("a").attr("title");
                         String pictureUrl = entry.select("a").select("img").attr("src");
 
@@ -204,7 +208,7 @@ public class FilmParser {
                 }
 
                 film.setDescription(doc.select("div.bx1.justify").select("p").text());
-                film.setSameLink("http://kinozal.me" + doc.select("td.w90p").select("a").attr("href"));
+                film.setSameLink(BASE_URL + doc.select("td.w90p").select("a").attr("href"));
 
                 return film;
             } catch (IOException e) {
@@ -240,15 +244,13 @@ public class FilmParser {
 
     private class GetTrailerUrl extends AsyncTask<String, Void, String> {
 
-        private static final String BASE_URL = "https://www.kinopoisk.ru";
-
         @Override
         protected String doInBackground(String... strings) {
             try {
                 Document document = Jsoup.connect(strings[0] + "/video").get();
                 Elements links = document.select("a.all");
 
-                String trailerPage = BASE_URL + links.first().attr("href");
+                String trailerPage = KINOPOISK_URL + links.first().attr("href");
                 document = Jsoup.connect(trailerPage).get();
                 Elements videos = document.select("a.continue");
                 for (Element video : videos) {
@@ -287,7 +289,7 @@ public class FilmParser {
                     sameItem.setSize(row.select("td").get(3).text());
                     sameItem.setSeeds(row.select("td").get(4).text());
                     sameItem.setDate(row.select("td").get(6).text());
-                    sameItem.setPageUrl("http://kinozal.me" + row.select("td.nam").select("a").attr("href"));
+                    sameItem.setPageUrl(BASE_URL + row.select("td.nam").select("a").attr("href"));
 
                     items.add(sameItem);
                 }

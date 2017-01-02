@@ -16,6 +16,10 @@ public class HttpClient {
         sClient.get(url, params, responseHandler);
     }
 
+    public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        sClient.post(url, params, responseHandler);
+    }
+
     public static void setBasicAuth(String username, String password) {
         sClient.setBasicAuth(username, password);
     }

@@ -25,7 +25,7 @@ public class SamePresenter extends MvpPresenter<SameView> {
 
     public void download(Activity activity, String url) {
         getViewState().showAddingProgress();
-        new MagnetLinkFetchr().getHashLink(activity, this, url.substring(33));
+        new MagnetLinkFetchr().getHashLink(activity, this, url);
     }
 
     public void showResult (String result, boolean setupServer) {

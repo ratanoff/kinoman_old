@@ -20,9 +20,11 @@ import java.util.Map;
 import ru.ratanov.kinoman.model.content.SearchItem;
 import ru.ratanov.kinoman.presentation.presenter.search.SearchPresenter;
 
+import static ru.ratanov.kinoman.model.base.Constants.BASE_URL;
+import static ru.ratanov.kinoman.model.base.Constants.BASE_URL_SEARCH;
+
 public class SearchAPI {
     public static final String TAG = "SearchAPI";
-    private static final String BASE_URL = "http://kinozal.me/browse.php";
     public static final String KEY_YEAR = "Год выпуска";
     public static final String KEY_GENRE = "Жанр";
     public static final String KEY_PRODUCTION = "Выпущено";
@@ -47,7 +49,7 @@ public class SearchAPI {
 
             LinkedHashMap<String, String> linksMap = new LinkedHashMap<>();
 
-            String url = Uri.parse(BASE_URL)
+            String url = Uri.parse(BASE_URL_SEARCH)
                     .buildUpon()
                     .appendQueryParameter("s", strings[0])
                     .appendQueryParameter("t", "1")
@@ -67,7 +69,7 @@ public class SearchAPI {
                     } else {
                         title = fullTitle;
                     }
-                    String link = "http://kinozal.me" + element.select("td.nam").select("a").attr("href");
+                    String link = BASE_URL + element.select("td.nam").select("a").attr("href");
 
                     if (SearchItem.isValid(category) && !linksMap.containsKey(title)) {
                         linksMap.put(title, link);

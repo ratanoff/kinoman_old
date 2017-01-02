@@ -7,8 +7,8 @@ android {
         applicationId "ru.ratanov.kinomanmvp"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 4
-        versionName "0.2.2"
+        versionCode 6
+        versionName "0.2.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

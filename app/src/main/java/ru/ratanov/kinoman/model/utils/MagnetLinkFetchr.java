@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -25,6 +26,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import ru.ratanov.kinoman.model.net.QBittorrentAPI;
 import ru.ratanov.kinoman.model.net.TorrentAPI;
 import ru.ratanov.kinoman.model.net.TransmissionAPI;
 import ru.ratanov.kinoman.presentation.presenter.detail.DetailPresenter;
@@ -75,6 +77,9 @@ public class MagnetLinkFetchr {
                     mMagnetLink = "magnet:?xt=urn:btih:" + magnetLinkHash;
 
                     String downloadBehavior = QueryPreferences.getStoredQuery(mActivity, "download_behavior");
+                    if (downloadBehavior == null) {
+                        downloadBehavior = "ask";
+                    }
 
                     switch (downloadBehavior) {
                         case "ask":
@@ -100,17 +105,23 @@ public class MagnetLinkFetchr {
         }
     }
 
-    public void getHashLink(Activity activity, MvpPresenter mvpPresenter, final String linkId) {
+    public void getHashLink(Activity activity, MvpPresenter mvpPresenter, final String url) {
 
         mActivity = activity;
         mMvpPresenter = mvpPresenter;
 
-
+        final String linkId = url.substring(url.indexOf("=") + 1);
 
         mWebView = new WebView(mActivity);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.addJavascriptInterface(new MyJavaInterface(), "HTMLOUT");
+
+        // Ignore HTTPS -> HTTP redirect issue
+        if (Build.VERSION.SDK_INT >= 21) {
+            mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
         // Block pop-ups
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -122,6 +133,10 @@ public class MagnetLinkFetchr {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
+                if (url.contains("userdetails")) {
+                    view.goBack();
+                }
 
                 // Login
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -152,7 +167,6 @@ public class MagnetLinkFetchr {
             }
         });
 
-        String url = "http://kinozal.me/details.php?id=" + linkId;
         mWebView.loadUrl(url);
         Log.i(TAG, "loadUrl" + url);
     }
@@ -168,6 +182,7 @@ public class MagnetLinkFetchr {
         Log.i(TAG, "onPageFinished: Parse");
     }
 
+    // TODO: 31.12.2016 Replace with listener
     private static void showResultMessage(String message, boolean setupServer) {
         if (mMvpPresenter instanceof DetailPresenter) {
             ((DetailPresenter) mMvpPresenter).showResult(message, setupServer);
@@ -243,6 +258,12 @@ public class MagnetLinkFetchr {
 
             return builder.create();
         }
+
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+            super.onDismiss(dialog);
+            hideProgress();
+        }
     }
 
     private static void sendToServer() {
@@ -261,6 +282,10 @@ public class MagnetLinkFetchr {
                 TransmissionAPI transmissionAPI = new TransmissionAPI(mActivity, mMvpPresenter);
                 transmissionAPI.addTorrent(mMagnetLink);
                 break;
+            case "QBittorrent":
+                QBittorrentAPI qBittorrentAPI = new QBittorrentAPI(mActivity, mMvpPresenter);
+                qBittorrentAPI.addTorrent(mMagnetLink);
+                break;
         }
     }
 
@@ -274,6 +299,7 @@ public class MagnetLinkFetchr {
         mActivity.startActivity(intent);
     }
 
+    // TODO: 31.12.2016 Replace with Listener
     private static void hideProgress() {
         if (mMvpPresenter instanceof DetailPresenter) {
             ((DetailPresenter) mMvpPresenter).hideAddingProgress();

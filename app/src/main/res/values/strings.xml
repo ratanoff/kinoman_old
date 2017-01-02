@@ -20,11 +20,13 @@
     <string-array name="client_type_titles">
         <item>uTorrent</item>
         <item>Transmission</item>
+        <item>QBittorrent</item>
     </string-array>
 
     <string-array name="client_type_values">
         <item>uTorrent</item>
         <item>Transmission</item>
+        <item>QBittorrent</item>
     </string-array>
 
     <string-array name="download_behavior_titles">
