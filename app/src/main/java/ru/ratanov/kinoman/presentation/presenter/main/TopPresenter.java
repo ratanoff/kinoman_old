@@ -10,21 +10,18 @@ import ru.ratanov.kinoman.model.parsers.FilmParser;
 import ru.ratanov.kinoman.presentation.view.main.MainView;
 
 /**
- * Created by ACER on 05.12.2016.
+ * Created by ACER on 15.01.2017.
  */
 
 @InjectViewState
-public class MultsPresenter extends MvpPresenter<MainView> {
-    private static final String TAG = "TopFragmentLog";
-    private String mCategory = "2";
+public class TopPresenter extends MvpPresenter<MainView> {
 
-    public MultsPresenter() {
+    public TopPresenter() {
     }
 
-
-    public void loadData() {
+    public void loadData(String category) {
         FilmParser filmParser = new FilmParser(this);
-        filmParser.getTopFilms(mCategory);
+        filmParser.getTopFilms(category);
     }
 
     public void onLoadComplete(List<TopItem> topItems) {

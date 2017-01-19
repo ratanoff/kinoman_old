@@ -62,7 +62,7 @@ public class SearchAPI {
 
                 for (Element element : elements) {
                     String fullTitle = element.select("td.nam").select("a").text().split(" / ")[0];
-                    String category = element.select("img").attr("src").split("/")[3].replace(".gif", "");
+                    String category = element.select("img").attr("src").split("/")[5].replace(".gif", "");
                     String title;
                     if (category.equals("45") || category.equals("46")) {
                         title = SearchItem.getTitleWithoutSeries(fullTitle);

@@ -3,8 +3,6 @@ package ru.ratanov.kinoman.model.parsers;
 import android.net.Uri;
 import android.os.AsyncTask;
 
-import com.arellomobile.mvp.MvpPresenter;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,9 +20,7 @@ import ru.ratanov.kinoman.model.content.SameItem;
 import ru.ratanov.kinoman.model.content.TopItem;
 import ru.ratanov.kinoman.presentation.presenter.detail.DetailPresenter;
 import ru.ratanov.kinoman.presentation.presenter.detail.SamePresenter;
-import ru.ratanov.kinoman.presentation.presenter.main.FilmsPresenter;
-import ru.ratanov.kinoman.presentation.presenter.main.MultsPresenter;
-import ru.ratanov.kinoman.presentation.presenter.main.SerialsPresenter;
+import ru.ratanov.kinoman.presentation.presenter.main.TopPresenter;
 
 import static ru.ratanov.kinoman.model.base.Constants.BASE_URL;
 import static ru.ratanov.kinoman.model.base.Constants.BASE_URL_TOP;
@@ -36,14 +32,24 @@ import static ru.ratanov.kinoman.model.base.Constants.KINOPOISK_URL;
 
 public class FilmParser {
 
-    private MvpPresenter mMvpPresenter;
+    private TopPresenter mTopPresenter;
+    private DetailPresenter mDetailPresenter;
+    private SamePresenter mSamePresenter;
 
     public FilmParser() {
 
     }
 
-    public FilmParser(MvpPresenter mvpPresenter) {
-        mMvpPresenter = mvpPresenter;
+    public FilmParser(TopPresenter topPresenter) {
+        mTopPresenter = topPresenter;
+    }
+
+    public FilmParser(DetailPresenter detailPresenter) {
+        mDetailPresenter = detailPresenter;
+    }
+
+    public FilmParser(SamePresenter samePresenter) {
+        mSamePresenter = samePresenter;
     }
 
     // Public Methods
@@ -96,7 +102,6 @@ public class FilmParser {
                 Document doc = Jsoup.connect(url).get();
                 if (doc != null) {
                     Elements elements = doc.select("div.bx1").select("a");
-//                    Log.i(TAG, String.valueOf(elements.size()) + "\n" + "-----");
                     for (Element entry : elements) {
                         String link = BASE_URL + entry.select("a").attr("href");
                         String title = entry.select("a").attr("title");
@@ -119,15 +124,7 @@ public class FilmParser {
 
         @Override
         protected void onPostExecute(List<TopItem> topItems) {
-            if (mMvpPresenter instanceof FilmsPresenter) {
-                ((FilmsPresenter) mMvpPresenter).onLoadComplete(topItems);
-            }
-            if (mMvpPresenter instanceof SerialsPresenter) {
-                ((SerialsPresenter) mMvpPresenter).onLoadComplete(topItems);
-            }
-            if (mMvpPresenter instanceof MultsPresenter) {
-                ((MultsPresenter) mMvpPresenter).onLoadComplete(topItems);
-            }
+            mTopPresenter.onLoadComplete(topItems);
         }
     }
 
@@ -220,7 +217,7 @@ public class FilmParser {
         @Override
         protected void onPostExecute(Film film) {
             if (film != null) {
-                ((DetailPresenter) mMvpPresenter).updatePage(film);
+                mDetailPresenter.updatePage(film);
             }
         }
 
@@ -269,7 +266,7 @@ public class FilmParser {
 
         @Override
         protected void onPostExecute(String trailerUrl) {
-            ((DetailPresenter) mMvpPresenter).showTrailer(trailerUrl);
+            mDetailPresenter.showTrailer(trailerUrl);
         }
     }
 
@@ -302,7 +299,7 @@ public class FilmParser {
 
         @Override
         protected void onPostExecute(List<SameItem> sameItems) {
-            ((SamePresenter) mMvpPresenter).showSameFilms(items);
+            mSamePresenter.showSameFilms(sameItems);
         }
     }
 }

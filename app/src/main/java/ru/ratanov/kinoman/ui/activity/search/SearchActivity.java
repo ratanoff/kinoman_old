@@ -57,7 +57,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
         String query = getIntent().getStringExtra(EXTRA_QUERY);
         if (query != null) {
             doSearch(query);
-            Log.d(TAG, "onCreate: search");
+            Log.d(TAG, "onCreate: search " + query);
         }
     }
 
@@ -67,7 +67,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
         String query = intent.getStringExtra(EXTRA_QUERY);
         if (query != null) {
             doSearch(query);
-            Log.d(TAG, "onNewIntent: search");
+            Log.d(TAG, "onNewIntent: search " + query);
         }
     }
 

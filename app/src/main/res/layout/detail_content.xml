@@ -178,7 +178,8 @@
                 android:textStyle="normal|bold"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/include2"
-                tools:text="7.5"/>
+                tools:text="7.5"
+                android:layout_marginStart="55dp"/>
 
             <TextView
                 android:id="@+id/textView13"
@@ -188,7 +189,8 @@
                 android:text="@string/rating_title"
                 android:textSize="10sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_rating"/>
+                app:layout_constraintTop_toBottomOf="@+id/detail_rating"
+                android:layout_marginStart="50dp"/>
 
             <TextView
                 android:id="@+id/detail_date"

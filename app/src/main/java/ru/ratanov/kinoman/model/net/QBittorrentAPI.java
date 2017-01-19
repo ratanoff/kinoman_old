@@ -3,32 +3,21 @@ package ru.ratanov.kinoman.model.net;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 
 import com.arellomobile.mvp.MvpPresenter;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.PersistentCookieStore;
-import com.loopj.android.http.RequestParams;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import cz.msebera.android.httpclient.Header;
 import ru.ratanov.kinoman.model.utils.QueryPreferences;
 import ru.ratanov.kinoman.presentation.presenter.detail.DetailPresenter;
 import ru.ratanov.kinoman.presentation.presenter.detail.SamePresenter;

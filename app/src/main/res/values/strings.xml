@@ -11,6 +11,7 @@
     <string name="please_talk">Говорите</string>
     <string name="settings">Настройки</string>
     <string name="connection_test">Проверка связи</string>
+    <string name="widget_labelled_spinner_errorText">You must choose an item.</string>
 
     <string name="instructions">Для работы необходим установленный на ПК клиент uTorrent.
 Заходим Настройки –> Настройки программы -> Дополнительно -> Web-Интерфейс
