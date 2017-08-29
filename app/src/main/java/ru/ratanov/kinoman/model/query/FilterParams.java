@@ -49,12 +49,12 @@ public class FilterParams {
         add(new FilterParams("t", "115", "|- Концерты"));
         add(new FilterParams("t", "116", "|- Спорт"));
         add(new FilterParams("t", "2", "Избранные мультфильмы"));
-        add(new FilterParams("t", "21", "|- Русские"));
-        add(new FilterParams("t", "22", "|- Буржуйские"));
+        add(new FilterParams("t", "21", "|- Русские мультфильмы"));
+        add(new FilterParams("t", "22", "|- Буржуйские мультфильмы"));
         add(new FilterParams("t", "23", "|- Аниме"));
         add(new FilterParams("t", "3", "Избранные сериалы"));
-        add(new FilterParams("t", "31", "|- Русские"));
-        add(new FilterParams("t", "32", "|- Буржуйские"));
+        add(new FilterParams("t", "31", "|- Русские сериалы"));
+        add(new FilterParams("t", "32", "|- Буржуйские сериалы"));
     }};
 
     public static final ArrayList<FilterParams> YEAR_PARAMS = new ArrayList<FilterParams>() {{
@@ -103,4 +103,27 @@ public class FilterParams {
         add(new FilterParams("s", "1", "По пирам"));
         add(new FilterParams("s", "2", "По комментариям"));
     }};
+
+    public static int getCurrentPosition(ArrayList<FilterParams> filterParams, String value) {
+        for (int i = 0; i < filterParams.size(); i++) {
+            if (filterParams.get(i).getId().equals(value)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public static String getTabTitle(String value) {
+        for (int i = 0; i < CATEGORY_PARAMS.size(); i++) {
+            if (CATEGORY_PARAMS.get(i).getId().equals(value)) {
+                String title = CATEGORY_PARAMS.get(i).getName();
+                if (title.startsWith("|- ")) {
+                    return title.substring(3);
+                } else {
+                    return title;
+                }
+            }
+        }
+        return null;
+    }
 }

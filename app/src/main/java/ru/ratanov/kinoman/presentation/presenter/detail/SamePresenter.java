@@ -9,6 +9,7 @@ import java.util.List;
 
 import ru.ratanov.kinoman.model.content.SameItem;
 import ru.ratanov.kinoman.model.parsers.FilmParser;
+import ru.ratanov.kinoman.model.parsers.MagnetParser;
 import ru.ratanov.kinoman.model.utils.MagnetLinkFetchr;
 import ru.ratanov.kinoman.presentation.view.detail.SameView;
 
@@ -24,8 +25,9 @@ public class SamePresenter extends MvpPresenter<SameView> {
     }
 
     public void download(Activity activity, String url) {
-        getViewState().showAddingProgress();
-        new MagnetLinkFetchr().getHashLink(activity, this, url);
+//        getViewState().showAddingProgress();
+//        new MagnetLinkFetchr().getHashLink(activity, this, url);
+        new MagnetParser().getMagnetLink(activity, this, url);
     }
 
     public void showResult (String result, boolean setupServer) {

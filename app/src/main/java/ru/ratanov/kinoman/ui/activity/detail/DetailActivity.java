@@ -23,7 +23,7 @@ import ru.ratanov.kinoman.model.content.Film;
 import ru.ratanov.kinoman.presentation.view.detail.DetailView;
 import ru.ratanov.kinoman.presentation.presenter.detail.DetailPresenter;
 import ru.ratanov.kinoman.ui.activity.base.BaseActivity;
-import ru.ratanov.kinoman.ui.activity.pref.PreferenceActivity;
+import ru.ratanov.kinoman.ui.activity.pref.OldPreferenceActivity;
 import ru.ratanov.kinoman.ui.fragment.detail.SameFragment;
 
 
@@ -198,7 +198,7 @@ public class DetailActivity extends BaseActivity implements DetailView {
                     .setAction("Настроить", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(getBaseContext(), PreferenceActivity.class);
+                            Intent intent = new Intent(getBaseContext(), OldPreferenceActivity.class);
                             startActivity(intent);
                         }
                     }).show();

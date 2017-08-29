@@ -18,14 +18,14 @@
 
     <!-- Styles for widgets -->
     <style name="DownloadButton" parent="AppTheme.Base">
-        <item name="android:colorButtonNormal">@color/download_normal</item>
-        <item name="android:colorControlHighlight">@color/download_pressed</item>
+        <item name="colorButtonNormal">@color/download_normal</item>
+        <item name="colorControlHighlight">@color/download_pressed</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="TrailerButton" parent="AppTheme.Base">
-        <item name="android:colorButtonNormal">@color/trailer_normal</item>
-        <item name="android:colorControlHighlight">@color/trailer_pressed</item>
+        <item name="colorButtonNormal">@color/trailer_normal</item>
+        <item name="colorControlHighlight">@color/trailer_pressed</item>
         <item name="android:textColor">@color/white</item>
     </style>
 

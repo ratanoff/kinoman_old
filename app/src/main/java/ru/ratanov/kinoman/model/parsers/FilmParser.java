@@ -1,5 +1,6 @@
 package ru.ratanov.kinoman.model.parsers;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -18,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 import ru.ratanov.kinoman.model.content.Film;
 import ru.ratanov.kinoman.model.content.SameItem;
 import ru.ratanov.kinoman.model.content.TopItem;
+import ru.ratanov.kinoman.model.utils.QueryPreferences;
 import ru.ratanov.kinoman.presentation.presenter.detail.DetailPresenter;
 import ru.ratanov.kinoman.presentation.presenter.detail.SamePresenter;
 import ru.ratanov.kinoman.presentation.presenter.main.TopPresenter;
@@ -32,6 +34,7 @@ import static ru.ratanov.kinoman.model.base.Constants.KINOPOISK_URL;
 
 public class FilmParser {
 
+    private Context mContext;
     private TopPresenter mTopPresenter;
     private DetailPresenter mDetailPresenter;
     private SamePresenter mSamePresenter;
@@ -54,8 +57,9 @@ public class FilmParser {
 
     // Public Methods
 
-    public void getTopFilms(String category) {
-        new GetTopTask().execute(category);
+    public void getTopFilms(Context context, String pageNumber) {
+        mContext = context;
+        new GetTopTask().execute(pageNumber);
     }
 
     public boolean isFilmBlocked(String url) {
@@ -84,19 +88,41 @@ public class FilmParser {
 
     private class GetTopTask extends AsyncTask<String, Void, List<TopItem>> {
 
-        String category;
 
         @Override
         protected List<TopItem> doInBackground(String... params) {
 
-            category = params[0];
+            String page = params[0];
+
+            String category_pref_key = "title_tab_" + page;
+            String year_pref_key = "year_tab_" + page;
+            String country_pref_key = "country_tab_" + page;
+            String format_pref_key = "format_tab_" + page;
+            String added_pref_key = "added_tab_" + page;
+            String sort_pref_key = "sort_tab_" + page;
+
+            String category = QueryPreferences.getStoredQuery(mContext, category_pref_key, String.valueOf(page));
+            String year = QueryPreferences.getStoredQuery(mContext, year_pref_key, "0");
+            String country = QueryPreferences.getStoredQuery(mContext, country_pref_key, "0");
+            String format = QueryPreferences.getStoredQuery(mContext, format_pref_key, "0");
+            String added = QueryPreferences.getStoredQuery(mContext, added_pref_key, "0");
+            String sort = QueryPreferences.getStoredQuery(mContext, sort_pref_key, "0");
+
+            System.out.println(category_pref_key + " = " + category);
 
             List<TopItem> items = new ArrayList<>();
             String url = Uri.parse(BASE_URL_TOP)
                     .buildUpon()
-                    .appendQueryParameter("t", params[0])
+                    .appendQueryParameter("t", category)
+                    .appendQueryParameter("d", year)
+                    .appendQueryParameter("k", country)
+                    .appendQueryParameter("f", format)
+                    .appendQueryParameter("w", added)
+                    .appendQueryParameter("s", sort)
                     .build()
                     .toString();
+
+            System.out.println(url);
 
             try {
                 Document doc = Jsoup.connect(url).get();

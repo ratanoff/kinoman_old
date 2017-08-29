@@ -19,6 +19,7 @@ import butterknife.BindDimen;
 import ru.ratanov.kinoman.R;
 import ru.ratanov.kinoman.model.adapters.TopAdapter;
 import ru.ratanov.kinoman.model.content.TopItem;
+import ru.ratanov.kinoman.model.utils.QueryPreferences;
 import ru.ratanov.kinoman.presentation.presenter.main.TopPresenter;
 import ru.ratanov.kinoman.presentation.view.main.MainView;
 
@@ -28,6 +29,9 @@ import ru.ratanov.kinoman.presentation.view.main.MainView;
 
 public class TopFragment extends MvpAppCompatFragment implements MainView {
 
+    public static final String EXTRA_PAGE_NUMBER = "extra_page_number";
+    private String mPageNumber;
+
     @InjectPresenter
     TopPresenter mTopPresenter;
 
@@ -36,12 +40,23 @@ public class TopFragment extends MvpAppCompatFragment implements MainView {
     @BindDimen(R.dimen.tile_padding)
     int titlePadding;
 
+    public static TopFragment newInstance(String pageNumber) {
 
+        Bundle args = new Bundle();
+        args.putString(EXTRA_PAGE_NUMBER, pageNumber);
+        TopFragment fragment = new TopFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTopPresenter.loadData("1");
+
+
+        mPageNumber = getArguments().getString(EXTRA_PAGE_NUMBER);
+        mTopPresenter.loadData(getContext(), mPageNumber);
+        System.out.println("onCreate: page = " + mPageNumber);
     }
 
     @Nullable
@@ -49,7 +64,8 @@ public class TopFragment extends MvpAppCompatFragment implements MainView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRecyclerView = (RecyclerView) inflater.inflate(R.layout.base_recyclerview, container, false);
         mRecyclerView.setPadding(titlePadding, titlePadding, titlePadding, titlePadding);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        int spans = Integer.parseInt(QueryPreferences.getStoredQuery(getContext(), "number_of_spans", "2"));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), spans));
         mRecyclerView.setHasFixedSize(true);
         return mRecyclerView;
     }
@@ -65,8 +81,8 @@ public class TopFragment extends MvpAppCompatFragment implements MainView {
         Snackbar.make(mRecyclerView, R.string.blocked, Snackbar.LENGTH_SHORT).show();
     }
 
-    public void update(String category) {
-        System.out.println("UPDATED");
-        mTopPresenter.loadData(category);
+    public void update() {
+        System.out.println("UPDATED, Page = " + mPageNumber);
+        mTopPresenter.loadData(getContext(), mPageNumber);
     }
 }

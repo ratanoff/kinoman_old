@@ -25,7 +25,7 @@ import ru.ratanov.kinoman.model.content.SameItem;
 import ru.ratanov.kinoman.presentation.presenter.detail.SamePresenter;
 import ru.ratanov.kinoman.presentation.view.detail.SameView;
 import ru.ratanov.kinoman.ui.activity.detail.DetailActivity;
-import ru.ratanov.kinoman.ui.activity.pref.PreferenceActivity;
+import ru.ratanov.kinoman.ui.activity.pref.OldPreferenceActivity;
 
 public class SameFragment extends MvpAppCompatFragment implements SameView {
 
@@ -116,7 +116,7 @@ public class SameFragment extends MvpAppCompatFragment implements SameView {
                     .setAction("Настроить", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(getActivity(), PreferenceActivity.class);
+                            Intent intent = new Intent(getActivity(), OldPreferenceActivity.class);
                             startActivity(intent);
                         }
                     }).show();

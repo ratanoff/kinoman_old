@@ -15,7 +15,7 @@ import ru.ratanov.kinoman.model.net.TorrentAPI;
 import ru.ratanov.kinoman.model.net.TransmissionAPI;
 import ru.ratanov.kinoman.model.utils.QueryPreferences;
 
-public class PreferenceActivity extends android.preference.PreferenceActivity
+public class OldPreferenceActivity extends android.preference.PreferenceActivity
         implements TorrentAPI.OnTestConnectionListener, TransmissionAPI.OnTestConnectionListener {
 
     private View mView;

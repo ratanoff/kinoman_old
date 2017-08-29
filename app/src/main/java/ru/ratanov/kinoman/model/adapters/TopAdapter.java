@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.List;
 import ru.ratanov.kinoman.R;
 import ru.ratanov.kinoman.model.content.TopItem;
 import ru.ratanov.kinoman.model.parsers.FilmParser;
+import ru.ratanov.kinoman.model.utils.QueryPreferences;
 import ru.ratanov.kinoman.ui.activity.detail.DetailActivity;
 
 /**
@@ -25,6 +27,9 @@ import ru.ratanov.kinoman.ui.activity.detail.DetailActivity;
 public class TopAdapter extends RecyclerView.Adapter<TopAdapter.TopViewHolder> {
 
     public static final String TAG = "TopAdapter";
+
+    private int posterWidth;
+    private int posterHeight;
 
     private Context mContext;
     private List<TopItem> mItems;
@@ -37,9 +42,11 @@ public class TopAdapter extends RecyclerView.Adapter<TopAdapter.TopViewHolder> {
     @Override
     public TopViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.main_tile_item, parent, false);
-        int width = (parent.getMeasuredWidth() / 2) - 4;
-        int height = (int) (width * 1.5);
-        view.setMinimumHeight(height);
+
+        int spans = Integer.parseInt(QueryPreferences.getStoredQuery(mContext, "number_of_spans", "2"));
+        posterWidth = parent.getMeasuredWidth() / spans;
+        posterHeight = (int) (posterWidth * 1.5);
+
         return new TopViewHolder(view);
     }
 
@@ -63,26 +70,24 @@ public class TopAdapter extends RecyclerView.Adapter<TopAdapter.TopViewHolder> {
         }
 
         void bindItem(final TopItem resultsItem) {
+
             Picasso.with(mContext)
                     .load(resultsItem.getPictureUrl())
+                    .resize(posterWidth - 2, posterHeight - 2)
                     .into(mImageView);
-
-            float density = mContext.getResources().getDisplayMetrics().density;
-//            int width = mImageView.getWidth();
-//            float height = width * density * 1.42f;
-//            mImageView.setMinimumHeight((int) height);
-//            Log.d(TAG, "bindItem: (" + density + ") " + mImageView.getMeasuredWidth() + "x" + mImageView.getMeasuredHeight());
 
             mImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FilmParser filmParser = new FilmParser();
+                    Intent intent = DetailActivity.newIntent(mContext, resultsItem.getLink());
+                    mContext.startActivity(intent);
+                    /*FilmParser filmParser = new FilmParser();
                     if (filmParser.isFilmBlocked(resultsItem.getLink())) {
                         Snackbar.make(view, R.string.blocked, Snackbar.LENGTH_SHORT).show();
                     } else {
                         Intent intent = DetailActivity.newIntent(mContext, resultsItem.getLink());
                         mContext.startActivity(intent);
-                    }
+                    }*/
                 }
             });
         }
