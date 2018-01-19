@@ -1,12 +1,16 @@
 package ru.ratanov.kinoman.model.content;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Required;
+
 /**
  * Created by ACER on 08.12.2016.
  */
 
-public class Film {
+public class Film extends RealmObject {
 
     private String link;
+    private String id;
     private String title;
     private String posterUrl;
     private String quality;
@@ -23,6 +27,7 @@ public class Film {
     private String seeds;
     private String description;
     private String trailerUrl;
+    private boolean isFavorite;
     private String KpUrl;
     private String sameLink;
 
@@ -36,6 +41,14 @@ public class Film {
 
     public String getLink() {
         return link;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setLink(String link) {
@@ -164,6 +177,14 @@ public class Film {
 
     public void setTrailerUrl(String trailerUrl) {
         this.trailerUrl = trailerUrl;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 
     public String getKpUrl() {

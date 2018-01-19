@@ -21,6 +21,7 @@ import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import ru.ratanov.kinoman.R;
 import ru.ratanov.kinoman.model.query.FilterParams;
 import ru.ratanov.kinoman.model.utils.QueryPreferences;
@@ -52,6 +53,8 @@ public class MainActivity extends BaseActivity {
         // Setup ToolBar
         setupToolBar();
         setupSearchView();
+        // Init Realm
+        Realm.init(this);
     }
 
 

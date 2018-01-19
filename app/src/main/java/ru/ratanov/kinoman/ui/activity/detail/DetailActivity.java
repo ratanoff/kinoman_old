@@ -4,20 +4,26 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import ru.ratanov.kinoman.R;
 import ru.ratanov.kinoman.model.content.Film;
 import ru.ratanov.kinoman.presentation.view.detail.DetailView;
@@ -51,9 +57,13 @@ public class DetailActivity extends BaseActivity implements DetailView {
     @BindView(R.id.detail_date) TextView date;
     @BindView(R.id.detail_seeds) TextView seeds;
     @BindView(R.id.detail_description) TextView description;
+    @BindView(R.id.favorite_button) ImageView favoriteButton;
 
     public static final String TAG = "DetailActivity";
     public static final String EXTRA_URL = "extra_url";
+
+    private Film mFilm;
+    private Realm mRealm;
 
     private String mUrl;
     private String kpUrl;
@@ -77,6 +87,7 @@ public class DetailActivity extends BaseActivity implements DetailView {
         setupToolBar();
         setupSearchView();
 
+        mRealm = Realm.getDefaultInstance();
 
         mUrl = getIntent().getStringExtra(EXTRA_URL);
         Log.d(TAG, "onCreate: " + mUrl);
@@ -103,6 +114,7 @@ public class DetailActivity extends BaseActivity implements DetailView {
 
     @Override
     public void updatePage(final Film film) {
+        mFilm = film;
         kpUrl = film.getKpUrl();
 
         title.setText(film.getTitle());
@@ -127,6 +139,14 @@ public class DetailActivity extends BaseActivity implements DetailView {
                 startActivity(intent);
             }
         });
+
+        RealmResults<Film> favoriteFilms = mRealm.where(Film.class).equalTo("id", mFilm.getId()).findAll();
+        if (favoriteFilms != null && favoriteFilms.size() > 0) {
+            mFilm.setFavorite(true);
+        }
+
+
+        favoriteButton.setImageResource(film.isFavorite() ? R.drawable.ic_star_solid_24dp : R.drawable.ic_star_border_24dp);
 
         mainLayout.setVisibility(View.VISIBLE);
 
@@ -168,6 +188,27 @@ public class DetailActivity extends BaseActivity implements DetailView {
             startActivity(playTrailer);
         } else {
             Snackbar.make(mainLayout, "Трейлер не найден", Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    // Favorite
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @OnClick(R.id.favorite_button)
+    public void onFavoriteClick() {
+        if (mFilm.isFavorite()) {
+            mFilm.setFavorite(false);
+            favoriteButton.setImageResource(R.drawable.ic_star_border_24dp);
+            mRealm.beginTransaction();
+            Film filmToDelete = mRealm.where(Film.class).equalTo("id", mFilm.getId()).findFirst();
+            filmToDelete.deleteFromRealm();
+            mRealm.commitTransaction();
+        } else {
+            mFilm.setFavorite(true);
+            favoriteButton.setImageResource(R.drawable.ic_star_solid_24dp);
+            Toast.makeText(this, "Добавлено в избранное", Toast.LENGTH_SHORT).show();
+            mRealm.beginTransaction();
+            mRealm.insert(mFilm);
+            mRealm.commitTransaction();
         }
     }
 
@@ -215,5 +256,11 @@ public class DetailActivity extends BaseActivity implements DetailView {
 
     public String getUrl() {
         return mUrl;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mRealm.close();
     }
 }

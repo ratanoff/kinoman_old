@@ -18,6 +18,7 @@ import com.lapism.searchview.SearchView;
 import java.util.List;
 
 import ru.ratanov.kinoman.R;
+import ru.ratanov.kinoman.ui.activity.fav.FavActivity;
 import ru.ratanov.kinoman.ui.activity.pref.OldPreferenceActivity;
 import ru.ratanov.kinoman.ui.activity.pref.SettingsActivity;
 import ru.ratanov.kinoman.ui.activity.search.SearchActivity;
@@ -40,6 +41,10 @@ public class BaseActivity extends MvpAppCompatActivity {
         }
         if (item.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
+        if (item.getItemId() == R.id.action_fav) {
+            Intent intent = new Intent(this, FavActivity.class);
             startActivity(intent);
         }
 

@@ -10,13 +10,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.activity.main.MainActivity">
+
+        <activity android:name=".ui.activity.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activity.main.MainActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".ui.activity.detail.DetailActivity">
@@ -40,6 +49,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ru.ratanov.kinoman.ui.activity.main.MainActivity"/>
         </activity>
+        <activity android:name=".ui.activity.fav.FavActivity"/>
     </application>
 
 </manifest>

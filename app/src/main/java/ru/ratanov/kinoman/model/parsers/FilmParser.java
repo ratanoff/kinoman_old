@@ -3,6 +3,7 @@ package ru.ratanov.kinoman.model.parsers;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -38,6 +39,7 @@ public class FilmParser {
     private TopPresenter mTopPresenter;
     private DetailPresenter mDetailPresenter;
     private SamePresenter mSamePresenter;
+    public static final String TAG = "FilmParser";
 
     public FilmParser() {
 
@@ -194,12 +196,15 @@ public class FilmParser {
         protected Film doInBackground(String... strings) {
 
             try {
-                Document doc = Jsoup.connect(strings[0]).get();
+                String link = strings[0];
+                Document doc = Jsoup.connect(link).get();
                 fillHashMap(doc.select("h2").html());
                 fillHashMap(doc.select("div.justify.mn2.pad5x5").html());
 
                 Film film = new Film();
 
+                film.setLink(link);
+                film.setId(link.substring(link.indexOf("=") + 1));
                 film.setTitle(doc.select("h1").text());
                 film.setPosterUrl(doc.select("img.p200").attr("src"));
                 film.setQuality(getPair(KEY_QUALITY));
@@ -270,12 +275,18 @@ public class FilmParser {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                Document document = Jsoup.connect(strings[0] + "/video").get();
-                Elements links = document.select("a.all");
+                String pageUrl = strings[0] + "/video/type/1";
+                Log.i(TAG, "doInBackground: pageUrl " + pageUrl);
+                Document document = Jsoup.connect(pageUrl).get();
 
-                String trailerPage = KINOPOISK_URL + links.first().attr("href");
-                document = Jsoup.connect(trailerPage).get();
                 Elements videos = document.select("a.continue");
+                Log.i(TAG, "doInBackground: found videos " + videos.size() );
+
+                for (Element video : videos) {
+                    Log.i(TAG, "doInBackground: v " + video.attr("href"));
+                }
+
+
                 for (Element video : videos) {
                     if (video.text().contains("Высокое качество")) {
                         int start = video.attr("href").indexOf("http");
